@@ -1,0 +1,1151 @@
+/* ================================
+   网络拓扑可视化样式
+   ================================ */
+
+/* 主要CSS变量 */
+:root {
+    --topology-bg: #fafafa;
+    --topology-panel-bg: #ffffff;
+    --topology-border: #e5e7eb;
+    --topology-text: #374151;
+    --topology-text-light: #6b7280;
+    --topology-text-dark: #1f2937;
+    --topology-card-bg: #f9fafb;
+    --topology-card-hover: rgba(255, 255, 255, 0.95);
+    --topology-shadow: rgba(0, 0, 0, 0.1);
+    --node-cisco: #6b7280;
+    --node-huawei: #dc2626;
+    --node-h3c: #059669;
+    --node-juniper: #7c3aed;
+    --node-default: #6b7280;
+    --node-selected: #4b5563;
+    --link-default: #9ca3af;
+    --link-selected: #4b5563;
+    --link-cdp: #ef4444;
+    --link-lldp: #10b981;
+}
+
+/* 暗色主题 */
+[data-theme="dark"] {
+    --topology-bg: #1e293b;
+    --topology-panel-bg: #334155;
+    --topology-border: #475569;
+    --topology-text: #f1f5f9;
+    --topology-text-light: #94a3b8;
+    --topology-text-dark: #f8fafc;
+    --topology-card-bg: #475569;
+    --topology-card-hover: rgba(71, 85, 105, 0.95);
+    --topology-shadow: rgba(0, 0, 0, 0.3);
+    --node-cisco: #e2e8f0;
+    --node-huawei: #f87171;
+    --node-h3c: #34d399;
+    --node-juniper: #a78bfa;
+    --node-default: #e2e8f0;
+    --node-selected: #f1f5f9;
+    --link-default: #94a3b8;
+    --link-selected: #e2e8f0;
+    --link-cdp: #f87171;
+    --link-lldp: #34d399;
+}
+
+/* 暗色主题下拓扑页面特殊样式 */
+[data-theme="dark"] .stat-value {
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .loading-spinner {
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .progress-spinner {
+    color: #e2e8f0;
+}
+
+[data-theme="dark"] .progress-fill {
+    background: #e2e8f0;
+}
+
+/* 暗色主题下拓扑页面按钮的特殊处理 */
+[data-theme="dark"] .topology-toolbar .btn {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+[data-theme="dark"] .topology-toolbar .btn:hover {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+}
+
+[data-theme="dark"] .topology-toolbar .btn-outline {
+    background-color: transparent !important;
+    color: #e2e8f0 !important;
+    border-color: #e2e8f0 !important;
+}
+
+[data-theme="dark"] .topology-toolbar .btn-outline:hover {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+[data-theme="dark"] .topology-toolbar .btn-primary {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+[data-theme="dark"] .action-buttons .btn {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+[data-theme="dark"] .action-buttons .btn:hover {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+}
+
+/* 暗色主题下所有拓扑相关按钮的统一处理 */
+[data-theme="dark"] .btn-primary:hover {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+}
+
+/* 暗色主题下拓扑空状态按钮的特殊处理 */
+[data-theme="dark"] #goto-devices-btn {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+}
+
+[data-theme="dark"] #goto-devices-btn:hover {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+}
+
+/* 拓扑工具栏 */
+.topology-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding: 1rem;
+    background: var(--topology-panel-bg);
+    border: 1px solid var(--topology-border);
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 3px 0 var(--topology-shadow);
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.toolbar-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    flex: 1;
+    min-width: 200px;
+}
+
+.toolbar-section h3 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--topology-text);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.toolbar-actions {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.toolbar-actions .btn {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.toolbar-actions .form-control-sm {
+    min-width: 120px;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    flex-shrink: 0;
+}
+
+/* 拓扑主界面布局 */
+.topology-main {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 1rem;
+    height: calc(100vh - 240px);
+    min-height: 600px;
+}
+
+/* 拓扑可视化区域 */
+.topology-visualization {
+    position: relative;
+    background: var(--topology-panel-bg);
+    border: 1px solid var(--topology-border);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 var(--topology-shadow);
+}
+
+.topology-canvas {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: var(--topology-bg);
+    cursor: grab;
+}
+
+.topology-canvas:active {
+    cursor: grabbing;
+}
+
+/* 拓扑SVG容器 */
+#topology-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* 拓扑加载状态 */
+.topology-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+}
+
+.loading-spinner {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.loading-text {
+    color: var(--topology-text-light);
+    font-size: 1rem;
+}
+
+/* 拓扑空状态 */
+.topology-empty {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 10;
+    max-width: 400px;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    color: var(--topology-text-light);
+    margin-bottom: 1rem;
+}
+
+.empty-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--topology-text);
+    margin-bottom: 0.5rem;
+}
+
+.empty-description {
+    color: var(--topology-text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+/* 拓扑操作提示 */
+.topology-hints {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+    background: var(--topology-panel-bg);
+    color: var(--topology-text);
+    padding: 0.75rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    z-index: 20;
+    max-width: 200px;
+    border: 1px solid var(--topology-border);
+    box-shadow: 0 1px 3px 0 var(--topology-shadow);
+}
+
+.hint-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.hint-item:last-child {
+    margin-bottom: 0;
+}
+
+.hint-item i {
+    width: 16px;
+    text-align: center;
+    color: var(--topology-text-light);
+}
+
+/* 拓扑信息面板 */
+.topology-info-panel {
+    background: var(--topology-panel-bg);
+    border: 1px solid var(--topology-border);
+    border-radius: 8px;
+    padding: 1rem;
+    overflow-y: auto;
+    box-shadow: 0 1px 3px 0 var(--topology-shadow);
+}
+
+.info-section {
+    margin-bottom: 1.5rem;
+}
+
+.info-section:last-child {
+    margin-bottom: 0;
+}
+
+.info-section h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--topology-text);
+    margin: 0 0 0.75rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--topology-border);
+}
+
+/* 统计网格 */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.stat-item {
+    text-align: center;
+    padding: 0.75rem;
+    background: var(--topology-card-bg);
+    border-radius: 6px;
+}
+
+.stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 0.25rem;
+}
+
+.stat-label {
+    font-size: 0.75rem;
+    color: var(--topology-text-light);
+    font-weight: 500;
+}
+
+/* 节点和链路详情 */
+.node-details, .link-details {
+    min-height: 120px;
+}
+
+.no-selection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--topology-text-light);
+    height: 100px;
+    gap: 0.5rem;
+}
+
+.no-selection i {
+    font-size: 1.5rem;
+}
+
+.device-info {
+    padding: 1rem;
+    background: var(--topology-card-bg);
+    border-radius: 12px;
+    border-left: 4px solid var(--primary-color);
+    box-shadow: 0 2px 8px var(--topology-shadow);
+    border: 1px solid var(--topology-border);
+}
+
+.device-name {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--topology-text-dark);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.device-name::before {
+    content: "📱";
+    font-size: 1.2em;
+}
+
+.device-details {
+    font-size: 0.875rem;
+    color: var(--topology-text-light);
+    line-height: 1.6;
+}
+
+.device-details .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    background: var(--topology-panel-bg);
+    border-radius: 8px;
+    border: 1px solid var(--topology-border);
+    transition: all 0.2s ease;
+}
+
+.device-details .detail-item:hover {
+    background: var(--topology-card-hover);
+    transform: translateX(2px);
+    box-shadow: 0 2px 4px var(--topology-shadow);
+}
+
+.device-details .detail-item:last-child {
+    margin-bottom: 0;
+}
+
+.device-details .detail-label {
+    font-weight: 600;
+    color: var(--topology-text);
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.device-details .detail-label::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 0.75rem;
+    color: var(--topology-text-light);
+}
+
+.device-details .detail-item:nth-child(1) .detail-label::before {
+    content: "\f0ac"; /* IP地址图标 */
+}
+
+.device-details .detail-item:nth-child(2) .detail-label::before {
+    content: "\f1ad"; /* 厂商图标 */
+}
+
+.device-details .detail-item:nth-child(3) .detail-label::before {
+    content: "\f108"; /* 类型图标 */
+}
+
+.device-details .detail-item:nth-child(4) .detail-label::before {
+    content: "\f111"; /* 状态图标 */
+}
+
+.device-details .detail-item:nth-child(5) .detail-label::before {
+    content: "\f0c1"; /* 接口图标 */
+}
+
+/* 拓扑页面的设备状态指示器统一样式 - 仅在拓扑页面节点详情中使用 */
+.device-details .device-status {
+    display: inline-block !important;
+    width: 6px !important;
+    height: 6px !important;
+    border-radius: 50% !important;
+    margin-right: 8px !important;
+    vertical-align: middle !important;
+}
+
+.device-details .device-status.online {
+    background-color: #4CAF50 !important;
+}
+
+.device-details .device-status.offline {
+    background-color: #F44336 !important;
+}
+
+.device-details .device-status.unreachable {
+    background-color: #FFC107 !important;
+}
+
+.device-details .device-status.maintenance {
+    background-color: #2196F3 !important;
+}
+
+.device-details .device-status.unknown {
+    background-color: #9E9E9E !important;
+}
+
+/* 设备状态指示器样式 - 只显示圆形指示灯，不显示文字 */
+.device-status-indicator {
+    display: inline-block !important;
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 50% !important;
+    border: 2px solid #fff !important;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1) !important;
+    vertical-align: middle !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 0 !important; /* 隐藏任何文字内容 */
+    text-indent: -9999px !important; /* 确保文字不显示 */
+    overflow: hidden !important;
+}
+
+.device-status-indicator.online {
+    background-color: #10b981 !important; /* 绿色 - 在线 */
+}
+
+.device-status-indicator.offline {
+    background-color: #ef4444 !important; /* 红色 - 离线 */
+}
+
+.device-status-indicator.unreachable {
+    background-color: #f59e0b !important; /* 橙色 - 不可达 */
+}
+
+.device-status-indicator.maintenance {
+    background-color: #6b7280 !important; /* 灰色 - 维护中 */
+}
+
+.device-status-indicator.unknown {
+    background-color: #d1d5db !important; /* 浅灰色 - 未知 */
+}
+
+/* 链路信息 */
+.link-info {
+    padding: 1rem;
+    background: var(--topology-card-bg);
+    border-radius: 12px;
+    border-left: 4px solid #10b981;
+    box-shadow: 0 2px 8px var(--topology-shadow);
+    border: 1px solid var(--topology-border);
+}
+
+.link-endpoints {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--topology-text-dark);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.link-endpoints::before {
+    content: "🔗";
+    font-size: 1.2em;
+}
+
+.link-details-info {
+    font-size: 0.875rem;
+    color: var(--topology-text-light);
+    line-height: 1.6;
+}
+
+.link-details-info .detail-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    padding: 0.375rem 0.75rem;
+    background: var(--topology-panel-bg);
+    border-radius: 8px;
+    border: 1px solid var(--topology-border);
+    transition: all 0.2s ease;
+}
+
+.link-details-info .detail-item:hover {
+    background: var(--topology-card-hover);
+    transform: translateX(2px);
+    box-shadow: 0 2px 4px var(--topology-shadow);
+}
+
+.link-details-info .detail-item:last-child {
+    margin-bottom: 0;
+}
+
+.link-details-info .detail-label {
+    font-weight: 600;
+    color: var(--topology-text);
+    min-width: 60px;
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.link-details-info .detail-label::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    font-size: 0.75rem;
+    color: var(--topology-text-light);
+}
+
+.link-details-info .detail-item:nth-child(1) .detail-label::before {
+    content: "\f1e6"; /* 协议图标 */
+}
+
+.link-details-info .detail-item:nth-child(2) .detail-label::before {
+    content: "\f362"; /* 源接口图标 */
+}
+
+.link-details-info .detail-item:nth-child(3) .detail-label::before {
+    content: "\f362"; /* 目标接口图标 */
+}
+
+.protocol-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-right: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.protocol-badge::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.2) 50%, transparent 70%);
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+
+.protocol-badge:hover::before {
+    transform: translateX(100%);
+}
+
+.protocol-badge.cdp {
+    background: linear-gradient(135deg, #fef2f2, #fecaca);
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+}
+
+.protocol-badge.lldp {
+    background: linear-gradient(135deg, #ecfdf5, #bbf7d0);
+    color: #059669;
+    border: 1px solid #86efac;
+}
+
+.protocol-badge.unknown {
+    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+    color: #6b7280;
+    border: 1px solid #d1d5db;
+}
+
+/* 操作按钮 */
+.action-buttons {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.action-buttons .btn {
+    justify-content: flex-start;
+    text-align: left;
+    font-size: 0.875rem;
+}
+
+.action-buttons .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* SVG节点样式 */
+.topology-node-group {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.topology-node-group:hover {
+    filter: brightness(1.1);
+}
+
+.topology-node-group.dragging {
+    cursor: grabbing;
+    filter: brightness(1.3) drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+    transform-origin: center;
+    z-index: 1000;
+}
+
+.topology-node-group.dragging .node-main-circle {
+    stroke-width: 0;
+    stroke: transparent;
+    fill: transparent !important;
+}
+
+.topology-node-group.dragging .node-status-indicator {
+    stroke-width: 3px;
+    stroke: var(--node-selected);
+}
+
+.topology-node-group.dragging .node-vendor-badge {
+    stroke-width: 3px;
+    stroke: var(--node-selected);
+}
+
+.topology-node-group.selected .node-main-circle {
+    stroke: var(--node-selected);
+    stroke-width: 3;
+    fill: transparent;
+}
+
+.topology-node-group.selected .node-status-indicator {
+    stroke: var(--node-selected);
+    stroke-width: 2;
+}
+
+.topology-node-group.selected .node-vendor-badge {
+    stroke: var(--node-selected);
+    stroke-width: 3px;
+}
+
+.node-main-circle {
+    transition: all 0.2s ease;
+}
+
+.node-icon {
+    pointer-events: none;
+    user-select: none;
+}
+
+.node-icon-group {
+    pointer-events: none;
+    user-select: none;
+}
+
+.node-icon-group svg {
+    pointer-events: none;
+    user-select: none;
+    transition: all 0.2s ease;
+}
+
+.topology-node-group:hover .node-icon-group svg {
+    filter: brightness(1.2);
+}
+
+.topology-node-group.selected .node-icon-group svg {
+    filter: brightness(1.3) drop-shadow(0 0 3px rgba(255,255,255,0.8));
+}
+
+.node-status-indicator {
+    transition: all 0.2s ease;
+}
+
+.node-vendor-badge {
+    transition: all 0.2s ease;
+}
+
+.node-vendor-text {
+    pointer-events: none;
+    user-select: none;
+}
+
+/* 保留原有的老式节点样式作为后备 */
+.topology-node {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.topology-node:hover {
+    filter: brightness(1.1);
+}
+
+.topology-node.selected {
+    stroke: var(--node-selected);
+    stroke-width: 3px;
+}
+
+.topology-node.cisco {
+    fill: var(--node-cisco);
+}
+
+.topology-node.huawei {
+    fill: var(--node-huawei);
+}
+
+.topology-node.h3c {
+    fill: var(--node-h3c);
+}
+
+.topology-node.juniper {
+    fill: var(--node-juniper);
+}
+
+.topology-node.default {
+    fill: var(--node-default);
+}
+
+/* SVG链路样式 */
+.topology-link {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.topology-link:hover {
+    stroke-width: 3px;
+}
+
+.topology-link.selected {
+    stroke: var(--link-selected);
+    stroke-width: 3px;
+}
+
+.topology-link.cdp {
+    stroke: var(--link-cdp);
+    stroke-dasharray: 5,5;
+}
+
+.topology-link.lldp {
+    stroke: var(--link-lldp);
+}
+
+.topology-link.default {
+    stroke: var(--link-default);
+}
+
+/* 节点标签 */
+.node-label {
+    font-size: 12px;
+    font-weight: 600;
+    fill: var(--topology-text-dark);
+    text-anchor: middle;
+    pointer-events: none;
+    user-select: none;
+}
+
+.node-label.selected {
+    fill: var(--node-selected);
+}
+
+/* 拓扑发现对话框样式 */
+.device-selection {
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid var(--topology-border);
+    border-radius: 6px;
+    padding: 0.75rem;
+    background: var(--topology-card-bg);
+}
+
+.checkbox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.checkbox-label {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-bottom: 0 !important; /* 覆盖全局label的margin-bottom */
+}
+
+.checkbox-label:hover {
+    background: var(--topology-card-hover);
+}
+
+.checkbox-label input[type="checkbox"] {
+    margin: 0;
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0; /* 防止复选框被压缩 */
+}
+
+.device-checkbox-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    margin-left: 0.5rem;
+}
+
+.device-checkbox-name {
+    font-weight: 500;
+    color: var(--topology-text-dark);
+    margin-bottom: 0;
+}
+
+.device-checkbox-info {
+    font-size: 0.875rem;
+    color: var(--topology-text-light);
+}
+
+.discovery-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    background: var(--topology-card-bg);
+    border-radius: 6px;
+}
+
+/* 发现进度样式 */
+.discovery-progress {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--topology-card-bg);
+    border-radius: 6px;
+}
+
+.progress-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.progress-header h3 {
+    margin: 0;
+    color: var(--topology-text-dark);
+}
+
+.progress-spinner {
+    color: var(--primary-color);
+    font-size: 1.25rem;
+}
+
+.progress-details {
+    color: var(--topology-text-light);
+}
+
+#discovery-status {
+    margin-bottom: 0.75rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--topology-border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary-color);
+    border-radius: 4px;
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+/* 节点右键菜单 */
+.context-menu {
+    position: absolute;
+    background: var(--topology-panel-bg);
+    border: 1px solid var(--topology-border);
+    border-radius: 6px;
+    padding: 0.5rem 0;
+    min-width: 160px;
+    z-index: 1000;
+    box-shadow: 0 4px 12px var(--topology-shadow);
+}
+
+.context-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    color: var(--topology-text);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.context-menu-item:hover {
+    background: var(--topology-card-bg);
+}
+
+.context-menu-item.disabled {
+    color: var(--topology-text-light);
+    cursor: not-allowed;
+}
+
+.context-menu-item.disabled:hover {
+    background: transparent;
+}
+
+.context-menu-divider {
+    height: 1px;
+    background: var(--topology-border);
+    margin: 0.25rem 0;
+}
+
+/* 新的上下文菜单样式（双击触发） */
+.topology-context-menu {
+    position: absolute;
+    background: var(--topology-panel-bg);
+    border: 1px solid var(--topology-border);
+    border-radius: 8px;
+    padding: 0.5rem 0;
+    min-width: 180px;
+    z-index: 1000;
+    box-shadow: 0 8px 24px var(--topology-shadow);
+    backdrop-filter: blur(8px);
+    font-size: 0.875rem;
+}
+
+.topology-context-menu .context-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    color: var(--topology-text);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 0;
+}
+
+.topology-context-menu .context-menu-item:hover {
+    background: var(--topology-card-bg);
+    transform: translateX(2px);
+}
+
+.topology-context-menu .context-menu-item i {
+    font-size: 1rem;
+    width: 16px;
+    text-align: center;
+    color: var(--topology-text-light);
+}
+
+.topology-context-menu .context-menu-item:hover i {
+    color: var(--primary-color);
+}
+
+.topology-context-menu .context-menu-item.disabled {
+    color: var(--topology-text-light);
+    cursor: not-allowed;
+}
+
+.topology-context-menu .context-menu-item.disabled:hover {
+    background: transparent;
+    transform: none;
+}
+
+.topology-context-menu .context-menu-item.disabled i {
+    color: var(--topology-text-light);
+}
+
+.topology-context-menu .context-menu-divider {
+    height: 1px;
+    background: var(--topology-border);
+    margin: 0.5rem 0;
+}
+
+/* 通知样式 */
+.topology-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem;
+    border-radius: 8px;
+    color: var(--topology-panel-bg);
+    font-weight: 500;
+    z-index: 2000;
+    box-shadow: 0 4px 12px var(--topology-shadow);
+}
+
+.topology-notification.success {
+    background: var(--success-color);
+    color: #166534;
+    border: 1px solid #bbf7d0;
+}
+
+.topology-notification.error {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.topology-notification.info {
+    background: #dbeafe;
+    color: #1d4ed8;
+    border: 1px solid #bfdbfe;
+}
+
+.topology-notification.warning {
+    background: #fef3c7;
+    color: #d97706;
+    border: 1px solid #fed7aa;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+    .topology-main {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr auto;
+    }
+    
+    .topology-info-panel {
+        max-height: 300px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    /* 工具栏在中等屏幕上的调整 */
+    .topology-toolbar {
+        justify-content: flex-start;
+        gap: 1rem;
+    }
+    
+    .toolbar-section {
+        min-width: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .topology-toolbar {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch; /* 在小屏幕上拉伸对齐 */
+    }
+    
+    .toolbar-section {
+        width: 100%;
+        min-width: unset;
+    }
+    
+    .toolbar-actions {
+        justify-content: flex-start;
+    }
+    
+    .topology-main {
+        height: auto;
+        min-height: 500px;
+    }
+    
+    .topology-info-panel {
+        order: -1;
+        max-height: 200px;
+    }
+} 

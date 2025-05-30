@@ -1,0 +1,21 @@
+{
+  "nodes": {
+    "2b03d257-37de-44f6-a03a-44a344ccf292": {
+      "device_id": "2b03d257-37de-44f6-a03a-44a344ccf292",
+      "name": "eNSP测试",
+      "ip_address": "192.168.56.2",
+      "vendor": "huawei",
+      "device_type": "switch",
+      "status": "unknown",
+      "interfaces": [],
+      "position": null,
+      "discovered_at": "2025-05-26T19:06:23.576921",
+      "last_seen": "2025-05-26T19:06:23.576921"
+    }
+  },
+  "links": [],
+  "last_discovery": "2025-05-26T19:06:23.577937",
+  "discovery_scope": [
+    "2b03d257-37de-44f6-a03a-44a344ccf292"
+  ]
+}

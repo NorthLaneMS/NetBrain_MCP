@@ -1,0 +1,21 @@
+{
+  "2b03d257-37de-44f6-a03a-44a344ccf292": {
+    "id": "2b03d257-37de-44f6-a03a-44a344ccf292",
+    "name": "eNSP测试",
+    "ip_address": "192.168.56.2",
+    "device_type": "switch",
+    "vendor": "huawei",
+    "platform": "huawei_vrp",
+    "model": "",
+    "os_version": "",
+    "status": "unknown",
+    "location": "",
+    "credential_id": "ced69119-25bb-41ae-adc3-decb6785ed91",
+    "description": "",
+    "tags": [],
+    "last_seen": null,
+    "created_at": "2025-05-17T16:58:39.750430",
+    "updated_at": "2025-05-24T20:15:32.852482",
+    "custom_attributes": {}
+  }
+}

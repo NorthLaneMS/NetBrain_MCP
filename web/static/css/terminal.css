@@ -1,0 +1,490 @@
+/**
+ * 终端相关样式
+ */
+
+/* CSS变量 */
+:root {
+    --terminal-bg: #f7f7f7;
+    --terminal-panel-bg: #ffffff;
+    --terminal-border: #e5e5e5;
+    --terminal-text: #333333;
+    --terminal-text-light: #666666;
+    --terminal-hover-bg: #f0f0f0;
+    --terminal-button-bg: #444444;
+    --terminal-button-text: #ffffff;
+    --terminal-button-hover: #333333;
+    --terminal-tab-bg: #555555;
+    --terminal-tab-active: #1a1a1a;
+    --terminal-tab-text: #cccccc;
+    --terminal-shadow: rgba(0, 0, 0, 0.05);
+}
+
+/* 暗色主题 */
+[data-theme="dark"] {
+    --terminal-bg: #1e293b;
+    --terminal-panel-bg: #334155;
+    --terminal-border: #475569;
+    --terminal-text: #f1f5f9;
+    --terminal-text-light: #94a3b8;
+    --terminal-hover-bg: #475569;
+    --terminal-button-bg: #e2e8f0;
+    --terminal-button-text: #0f172a;
+    --terminal-button-hover: #f1f5f9;
+    --terminal-tab-bg: #64748b;
+    --terminal-tab-active: #e2e8f0;
+    --terminal-tab-text: #f1f5f9;
+    --terminal-shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* 终端容器 */
+.terminal-layout {
+    display: flex;
+    flex-direction: row;
+    height: calc(100vh - 200px);
+    min-height: 500px;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px var(--terminal-shadow);
+}
+
+/* 会话管理面板 */
+.sessions-card {
+    flex: 0 0 250px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--terminal-panel-bg);
+    border-right: 1px solid var(--terminal-border);
+}
+
+.sessions-header {
+    padding: 15px;
+    border-bottom: 1px solid var(--terminal-border);
+}
+
+.sessions-header h2 {
+    font-size: 1rem;
+    margin: 0 0 10px 0;
+    color: var(--terminal-text);
+}
+
+.sessions-actions {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.sessions-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0 10px;
+}
+
+.sessions-section {
+    margin: 15px 0;
+}
+
+.sessions-section h3 {
+    font-size: 0.9rem;
+    margin: 0 0 10px 0;
+    color: var(--terminal-text-light);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.sessions-list {
+    margin-bottom: 15px;
+}
+
+.session-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    margin-bottom: 5px;
+    border-radius: 4px;
+    background-color: var(--terminal-bg);
+    box-shadow: 0 1px 3px var(--terminal-shadow);
+    transition: all 0.2s ease;
+}
+
+.session-item:hover {
+    background-color: var(--terminal-hover-bg);
+    box-shadow: 0 1px 5px var(--terminal-shadow);
+}
+
+.session-item-content {
+    flex: 1;
+}
+
+.session-item-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--terminal-text);
+}
+
+.session-item-details {
+    font-size: 0.8rem;
+    color: var(--terminal-text-light);
+}
+
+.session-item-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.session-item-action {
+    background: none;
+    border: none;
+    color: var(--terminal-text-light);
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    transition: all 0.2s ease;
+}
+
+.session-item-action:hover {
+    background-color: var(--terminal-hover-bg);
+    color: var(--terminal-text);
+}
+
+/* 会话组样式 */
+.session-group-item {
+    margin-bottom: 10px;
+}
+
+.session-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    background-color: var(--terminal-hover-bg);
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.session-group-content {
+    padding: 5px 0 5px 15px;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.session-group-content.active {
+    max-height: 500px;
+    padding: 10px 0 10px 15px;
+}
+
+.session-empty {
+    font-size: 0.8rem;
+    color: var(--terminal-text-light);
+    text-align: center;
+    padding: 15px 10px;
+}
+
+/* 终端卡片 */
+.terminal-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--terminal-panel-bg);
+}
+
+.terminal-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 4px;
+    margin: 0;
+}
+
+.terminal-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    background-color: var(--terminal-button-bg);
+    border-bottom: 1px solid var(--terminal-border);
+}
+
+.terminal-tabs {
+    flex: 1;
+    display: flex;
+    gap: 2px;
+    overflow-x: auto;
+    padding-bottom: 2px; /* 防止滚动条挡住内容 */
+    margin: 0;
+    height: 32px;
+}
+
+.terminal-tab {
+    padding: 5px 12px;
+    background-color: var(--terminal-tab-bg);
+    color: var(--terminal-tab-text);
+    border-radius: 5px 5px 0 0;
+    font-size: 0.8rem;
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+    margin: 0;
+    height: 20px;
+}
+
+.terminal-tab.active {
+    background-color: var(--terminal-tab-active);
+    color: var(--terminal-text);
+}
+
+[data-theme="dark"] .terminal-tab.active {
+    background-color: var(--terminal-tab-active);
+    color: #0f172a;
+    font-weight: 500;
+}
+
+[data-theme="dark"] .terminal-tab {
+    background-color: var(--terminal-tab-bg);
+    color: var(--terminal-tab-text);
+}
+
+[data-theme="dark"] .terminal-tab:hover {
+    background-color: #94a3b8;
+    color: #f1f5f9;
+}
+
+.terminal-tab-close {
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 14px;
+}
+
+.terminal-tab:hover .terminal-tab-close {
+    opacity: 1;
+}
+
+.terminal-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.terminal-windows {
+    flex: 1;
+    position: relative;
+    background-color: #1a1a1a;
+    overflow: hidden;
+}
+
+.terminal-instance {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: none;
+    padding: 5px;
+}
+
+.terminal-instance.active {
+    display: block;
+}
+
+/* XTerm 相关样式 */
+.xterm {
+    padding: 5px;
+    height: 100%;
+    font-feature-settings: "liga" 0;
+}
+
+.xterm-viewport {
+    overflow-y: auto !important;
+    background-color: #1a1a1a;
+    scrollbar-width: thin;
+    scrollbar-color: #444 #222;
+}
+
+.xterm-viewport::-webkit-scrollbar {
+    width: 10px;
+}
+
+.xterm-viewport::-webkit-scrollbar-track {
+    background: #222;
+}
+
+.xterm-viewport::-webkit-scrollbar-thumb {
+    background: #444;
+    border-radius: 5px;
+}
+
+.xterm-screen {
+    padding: 2px;
+}
+
+.xterm-rows {
+    font-variant-ligatures: none;
+    line-height: 1.2;
+}
+
+/* 会话状态指示灯样式 */
+.status-indicator {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.status-active {
+    background-color: #22c55e;  /* 绿色 - 活跃 */
+    box-shadow: 0 0 5px #22c55e;
+    animation: pulse 2s infinite;
+}
+
+.status-connecting {
+    background-color: #f59e0b;  /* 黄色 - 连接中 */
+    box-shadow: 0 0 5px #f59e0b;
+}
+
+.status-disconnected {
+    background-color: #ef4444;  /* 红色 - 断开 */
+}
+
+.status-error {
+    background-color: #f97316;  /* 橙色 - 错误 */
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 5px rgba(34, 197, 94, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+/* 按钮样式 */
+.btn-sm {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+}
+
+/* 设备连接对话框 */
+#device-connect-modal .modal-content {
+    width: 500px;
+}
+
+/* 创建新终端相关样式 */
+#reconnect-terminal, #connect-device {
+    background-color: var(--terminal-button-bg) !important;
+    color: var(--terminal-button-text) !important;
+    border: none;
+    margin: 0;
+    padding: 5px 10px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+#reconnect-terminal:hover, #connect-device:hover {
+    background-color: var(--terminal-button-hover) !important;
+    color: var(--terminal-button-text) !important;
+}
+
+/* 暗色主题下终端按钮的特殊处理 - 使用最高优先级 */
+[data-theme="dark"] #reconnect-terminal,
+[data-theme="dark"] #connect-device {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+[data-theme="dark"] #reconnect-terminal:hover,
+[data-theme="dark"] #connect-device:hover {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+    border: 1px solid #e2e8f0 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* 确保终端工具栏按钮在暗色主题下正确显示 */
+[data-theme="dark"] .terminal-actions .btn {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+[data-theme="dark"] .terminal-actions .btn:hover {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+/* 暗色主题下会话管理面板按钮的特殊处理 */
+[data-theme="dark"] .sessions-actions .btn {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+[data-theme="dark"] .sessions-actions .btn:hover {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+[data-theme="dark"] .sessions-actions .btn-sm {
+    background-color: #e2e8f0 !important;
+    color: #0f172a !important;
+    border: 1px solid #cbd5e1 !important;
+}
+
+[data-theme="dark"] .sessions-actions .btn-sm:hover {
+    background-color: #f1f5f9 !important;
+    color: #0f172a !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+/* 适配移动设备 */
+@media (max-width: 768px) {
+    .terminal-layout {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .sessions-card {
+        flex: none;
+        height: 200px;
+        overflow-y: auto;
+    }
+    
+    .terminal-card {
+        flex: none;
+        height: calc(100vh - 400px);
+        min-height: 300px;
+    }
+} 
