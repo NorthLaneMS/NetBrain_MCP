@@ -187,7 +187,7 @@ MCP服务器模块是整个系统的核心，基于FastMCP框架实现，负责�
 - 扫描结果分析和设备推荐
 
 **核心组件：**
-- ImprovedNetworkScanner类：网络扫描引擎
+- NetworkScanner类：网络扫描引擎
 - 并发扫描机制：支持可配置的并发数
 - 厂商识别：内置厂商MAC地址数据库
 
