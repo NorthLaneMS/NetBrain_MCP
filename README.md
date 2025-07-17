@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/northlanems-netbrain-mcp-badge.png)](https://mseep.ai/app/northlanems-netbrain-mcp)
+
 # NetBrain MCP
 
 NetBrain MCP 是一个开源的网络运维整合平台，通过 Model Context Protocol (MCP) 连接大型语言模型（LLM）与网络设备。它允许 AI 助手通过标准化协议执行网络配置、诊断和管理任务。
